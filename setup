@@ -1,0 +1,82 @@
+#!/bin/bash
+function SYSPATHset(){
+	cp $cur_path/sources/SYSPATH .
+}
+function developer(){
+	#set sshkey
+	echo "do you need a sshkey?(yes/no):"
+	read flag
+	while [[ $flag != yes ]]; do
+		if [[ $flag = no ]]; then
+			break
+		fi
+		echo "do you need a sshkey?(yes/no):"
+		read flag
+	done
+	if [[ $flag = yes ]]; then
+		$cur_path/sources/sshkey
+	fi
+
+	#set git config name and email
+	echo "do you need to set git config name and email?(yes/no):"
+	read flag
+	while [[ $flag != yes ]]; do
+		if [[ $flag = no ]]; then
+			break
+		fi
+		echo "do you need to set git config name and email?(yes/no):"
+		read flag
+	done
+	if [[ $flag = yes ]]; then
+		$cur_path/sources/gitconfig
+	fi
+	clear
+
+	#git clone
+	echo "input git link:"
+	read gitlink
+	echo "input git clone path:"
+	read gitpath
+	while [[ -d $gitpath ]]; do
+		echo "path already exist,try again:"
+		read gitpath
+	done
+	git clone $gitlink $gitpath
+	if [[ -d $gitpath ]]; then
+		echo "git clone done!"
+	else
+		echo "git clone failed."
+		exit
+	fi
+
+	#build virtual env
+	cd $gitpath
+	$cur_path/sources/python_virtual
+	echo "source ./venv/Scripts/activate">venvstart.sqlite
+	echo "source ./venv/SYSPATH">>venvstart.sqlite
+	if [[ -d venv ]]; then
+		:
+	else
+		echo "venv not build!"
+		exit
+	fi
+	cd venv
+	SYSPATHset
+	cd ..
+	source ./venvstart.sqlite
+
+	#install requirements
+	if [[ -f requirements.txt ]]; then
+		pip install -r requirements.txt
+	else
+		echo "no requirements file"
+	fi
+	
+}
+case $1 in
+	-h) echo "pip freeze: list pip package"
+		:;;
+	*)	cur_path=$(readlink -f .)
+		developer
+		:;;
+esac

@@ -1,0 +1,45 @@
+#!/bin/bash
+cd ~/.ssh
+if test -f "id_rsa"
+then 
+	echo "ssh key already exist!"
+	echo "do you want to set a new ssh key?(y/n):"
+	read flg
+	while [[ $flag != y ]]; do
+		if [[ $flag = n ]]; then
+			break
+		fi
+		echo "do you want to set a new ssh key?(y/n):"
+		read flag
+	done
+	if test flg=n
+	then
+		echo "trying to connect github..."
+		ssh -T git@github.com
+		exit
+	else
+		echo "please input dir name to backup:"
+		read pathname
+		mkdir $pathname
+		cp id_rsa* $pathname
+		rm id_rsa*
+	fi
+else 
+	:
+fi
+echo "please input your email address:"
+read emailadr
+ssh-keygen -t rsa -C $emailadr
+clear
+echo "your ssh key is:"
+echo "----------------------------------"
+cat ~/.ssh/id_rsa.pub
+echo "----------------------------------"
+echo "please insert it to you github and input OK"
+read flag
+while [[ $flag != OK]]; do
+	echo "please insert it to you github and input OK"
+	read flag
+done
+echo "trying to connect github..."
+ssh -T git@github.com

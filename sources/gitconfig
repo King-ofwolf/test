@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "please input your name:"
+read name
+echo "please input your email adress:"
+read emailadr
+gitconfig --global user.name $name
+gitconfig --global user.email $emailadr

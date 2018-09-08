@@ -1,0 +1,16 @@
+export FLASK_APP=flasky.py
+export FLASK_DEBUG=1
+
+export FLASK_ADMIN='wangshengling@buaa.edu.cn'
+export MAIL_USERNAME='wangshengling'
+export MAIL_PASSWORD='wangshengling897'
+export MAIL_SERVER='smtp.buaa.edu.cn'
+export MAIL_PORT='465'
+export MAIL_USE_TLS='false'
+export MAIL_USE_SSL='true'
+
+export SECRET_KEY='hard to guess string'
+
+export DEV_DATABASE_URL=
+export TEST_DATABASE_URL=
+export DATABASE_URL=

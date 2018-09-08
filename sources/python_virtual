@@ -1,0 +1,39 @@
+#!/bin/bash
+echo "testing pip installed or not..."
+pip --version
+clear
+if [[ $? -eq 0 ]]; then
+	echo "pip has installed!"
+else 
+	echo "pip not installed!"
+	echo "please add Python/Scripts path to system path!"
+	exit
+fi
+echo "testing virtualenv installed or not..."
+virtualenv --version
+clear
+if [[ $? -eq 0 ]]; then
+	echo "virtualenv has installed!"
+else 
+	echo "virtualenv not installed!"
+	echo "installing virtualenv..."
+	pip install virtualenv
+fi
+clear
+
+echo "installing over. do you want to build a new python virtual env?(no/yes):"
+read flag
+while [[ $flag != yes ]]; do
+	if [[ $flag = no ]]; then
+		break
+	fi
+	echo "do you want to build a new python virtual env?(no/yes):"
+	read flag
+done
+
+if [[ $flag = no ]]; then
+	exit
+else
+	virtualenv venv
+	echo "virtual env build."
+fi
