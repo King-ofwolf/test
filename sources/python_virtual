@@ -1,7 +1,6 @@
 #!/bin/bash
 echo "testing pip installed or not..."
 pip --version
-clear
 if [[ $? -eq 0 ]]; then
 	echo "pip has installed!"
 else 
@@ -11,7 +10,6 @@ else
 fi
 echo "testing virtualenv installed or not..."
 virtualenv --version
-clear
 if [[ $? -eq 0 ]]; then
 	echo "virtualenv has installed!"
 else 
@@ -19,7 +17,6 @@ else
 	echo "installing virtualenv..."
 	pip install virtualenv
 fi
-clear
 
 echo "installing over. do you want to build a new python virtual env?(no/yes):"
 read flag
@@ -34,6 +31,17 @@ done
 if [[ $flag = no ]]; then
 	exit
 else
-	virtualenv venv
+	case $1 in
+		-p) c_cur_path=$(readlink -f .)
+			cd $2
+			virtualenv venv
+			cd $c_cur_path;;
+		*) echo "please input path:"
+			read venvpath
+			c_cur_path=$(readlink -f .)
+			cd $venvpath
+			virtualenv venv
+			cd $c_cur_path;;
+	esac
 	echo "virtual env build."
 fi

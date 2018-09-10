@@ -37,7 +37,7 @@ cat ~/.ssh/id_rsa.pub
 echo "----------------------------------"
 echo "please insert it to you github and input OK"
 read flag
-while [[ $flag != OK]]; do
+while [[ $flag != OK ]]; do
 	echo "please insert it to you github and input OK"
 	read flag
 done

@@ -50,8 +50,7 @@ function developer(){
 	fi
 
 	#build virtual env
-	cd $gitpath
-	$cur_path/sources/python_virtual
+	$cur_path/sources/python_virtual -p $gitpath
 	echo "source ./venv/Scripts/activate">venvstart.sqlite
 	echo "source ./venv/SYSPATH">>venvstart.sqlite
 	if [[ -d venv ]]; then
