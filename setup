@@ -2,6 +2,173 @@
 function SYSPATHset(){
 	cp $cur_path/sources/SYSPATH .
 }
+function askinput(){
+	echo $1
+	read flag
+	while [[ $flag != yes ]]; do
+		if [[ $flag = no ]]; then
+			break
+		fi
+		echo $1
+		read flag
+	done
+}
+function sshkeyset(){
+	cd ~/.ssh
+	if test -f "id_rsa"
+	then 
+		echo "ssh key already exist!"
+		echo "do you want to set a new ssh key?(y/n):"
+		read flg
+		while [[ $flag != y ]]; do
+			if [[ $flag = n ]]; then
+				break
+			fi
+			echo "do you want to set a new ssh key?(y/n):"
+			read flag
+		done
+		if test flg=n
+		then
+			echo "trying to connect github..."
+			ssh -T git@github.com
+			exit
+		else
+			echo "please input dir name to backup:"
+			read pathname
+			mkdir $pathname
+			cp id_rsa* $pathname
+			rm id_rsa*
+		fi
+	else 
+		:
+	fi
+	echo "please input your email address:"
+	read emailadr
+	ssh-keygen -t rsa -C $emailadr
+	clear
+	echo "your ssh key is:"
+	echo "----------------------------------"
+	cat ~/.ssh/id_rsa.pub
+	echo "----------------------------------"
+	echo "please insert it to you github and input OK"
+	read flag
+	while [[ $flag != OK ]]; do
+		echo "please insert it to you github and input OK"
+		read flag
+	done
+	echo "trying to connect github..."
+	ssh -T git@github.com
+	cd $cur_path
+}
+function gitconfigset(){
+	echo "please input your name:"
+	read name
+	echo "please input your email adress:"
+	read emailadr
+	gitconfig --global user.name $name
+	gitconfig --global user.email $emailadr
+}
+function gitclone(){
+	echo "input git link:"
+	read gitlink
+	echo "input git clone path:"
+	read gitpath
+	while [[ -d $gitpath ]]; do
+		askinput "path already exist,do you want to continue?(yes/no):"
+		if [[ $flag = yes ]]; then
+			break
+		fi
+		echo "input git clone path:"
+		read gitpath
+	done
+	if [[ $flag = yes ]]; then
+		echo $gitpath
+		cd $gitpath
+		git clone $gitlink
+		cd $cur_path
+	else
+		git clone $gitlink $gitpath
+	fi
+	if [[ -d $gitpath ]]; then
+		echo "git clone done!"
+	else
+		echo "git clone failed."
+		return 1
+	fi
+}
+function python_virtual(){
+	echo "testing pip installed or not..."
+	pip --version
+	if [[ $? -eq 0 ]]; then
+		echo "pip has installed!"
+	else 
+		echo "pip not installed!"
+		echo "please add Python/Scripts path to system path!"
+		return 1
+	fi
+	echo "testing virtualenv installed or not..."
+	virtualenv --version
+	if [[ $? -eq 0 ]]; then
+		echo "virtualenv has installed!"
+	else 
+		echo "virtualenv not installed!"
+		echo "installing virtualenv..."
+		pip install virtualenv
+	fi
+
+	echo "installing over. do you want to build a new python virtual env?(no/yes):"
+	read flag
+	while [[ $flag != yes ]]; do
+		if [[ $flag = no ]]; then
+			break
+		fi
+		echo "do you want to build a new python virtual env?(no/yes):"
+		read flag
+	done
+
+	if [[ $flag = no ]]; then
+		return 0
+	else
+		c_cur_path=$(readlink -f .)
+		echo "are you sure to build venv in $c_cur_path ?(no/yes):"
+		read flag
+		while [[ $flag != yes ]]; do
+		if [[ $flag = no ]]; then
+			break
+		fi
+		echo "are you sure to build venv in $c_cur_path ?(no/yes):"
+		read flag
+		done
+		if [[ flag = yes ]]; then
+			virtualenv venv
+		else
+			echo "please input path:"
+			read venvpath
+			virtualenv $venvpath/venv
+			cd $venvpath
+		fi
+		echo "virtual env build."
+	fi
+	echo "source ./venv/Scripts/activate">venvstart.sqlite
+	echo "source ./venv/SYSPATH">>venvstart.sqlite
+	if [[ -d venv ]]; then
+		:
+	else
+		echo "venv not build!"
+		return 1
+	fi
+	cd venv
+	SYSPATHset
+	cd ..
+	source ./venvstart.sqlite
+}
+function requirementsinstall(){
+	if [[ -f requirements.txt ]]; then
+		pip install -r requirements.txt
+	else
+		echo "no requirements file"
+	fi
+}
 function developer(){
 	#set sshkey
 	echo "do you need a sshkey?(yes/no):"
@@ -14,7 +181,7 @@ function developer(){
 		read flag
 	done
 	if [[ $flag = yes ]]; then
-		$cur_path/sources/sshkey
+		sshkeyset
 	fi
 
 	#set git config name and email
@@ -28,49 +195,19 @@ function developer(){
 		read flag
 	done
 	if [[ $flag = yes ]]; then
-		$cur_path/sources/gitconfig
+		gitconfigset
 	fi
 	clear
 
 	#git clone
-	echo "input git link:"
-	read gitlink
-	echo "input git clone path:"
-	read gitpath
-	while [[ -d $gitpath ]]; do
-		echo "path already exist,try again:"
-		read gitpath
-	done
-	git clone $gitlink $gitpath
-	if [[ -d $gitpath ]]; then
-		echo "git clone done!"
-	else
-		echo "git clone failed."
-		exit
-	fi
+	gitclone
 
 	#build virtual env
-	$cur_path/sources/python_virtual -p $gitpath
 	cd $gitpath
-	echo "source ./venv/Scripts/activate">venvstart.sqlite
-	echo "source ./venv/SYSPATH">>venvstart.sqlite
-	if [[ -d venv ]]; then
-		:
-	else
-		echo "venv not build!"
-		exit
-	fi
-	cd venv
-	SYSPATHset
-	cd ..
-	source ./venvstart.sqlite
+	python_virtual
 
 	#install requirements
-	if [[ -f requirements.txt ]]; then
-		pip install -r requirements.txt
-	else
-		echo "no requirements file"
-	fi
+	requirementsinstall
 	
 }
 case $1 in
