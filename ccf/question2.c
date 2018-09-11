@@ -35,17 +35,17 @@ int main(void)
 	}
 	for (i = 1; i <= t; i++){
 		if(*sort[0]==0) v[0]=1;
-		for(num = 0; num < n; num++){
+		for(num = 0; num < n-1; num++){
 			if(*sort[num]==*sort[num+1]){
 				v[num]=-1;v[num+1]=1;
 			}
 		}
 		if(*sort[n-1]==l) v[n-1]=-1;
 		for (num = 0; num < n; num++){
-			printf("%d ",*sort[num]);
+			//printf("%d ",*sort[num]);
 			*sort[num]+=v[num];
 		}
-		printf("\n");
+		//printf("\n");
 	}
 	for (num = 0; num < n-1; num++){
 		printf("%d ",place[num]);
