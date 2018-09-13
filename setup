@@ -18,16 +18,8 @@ function sshkeyset(){
 	if test -f "id_rsa"
 	then 
 		echo "ssh key already exist!"
-		echo "do you want to set a new ssh key?(y/n):"
-		read flg
-		while [[ $flag != y ]]; do
-			if [[ $flag = n ]]; then
-				break
-			fi
-			echo "do you want to set a new ssh key?(y/n):"
-			read flag
-		done
-		if test flg=n
+		askinput "do you want to set a new ssh key?(yes/no)"
+		if [[ flag = no ]];
 		then
 			echo "trying to connect github..."
 			ssh -T git@github.com
@@ -116,28 +108,15 @@ function python_virtual(){
 		pip install virtualenv
 	fi
 
-	echo "installing over. do you want to build a new python virtual env?(no/yes):"
-	read flag
-	while [[ $flag != yes ]]; do
-		if [[ $flag = no ]]; then
-			break
-		fi
-		echo "do you want to build a new python virtual env?(no/yes):"
-		read flag
-	done
+	echo "installing over. "
+	askinput "do you want to build a new python virtual env?(no/yes):"
 
 	if [[ $flag = no ]]; then
 		return 0
 	else
 		c_cur_path=$(readlink -f .)
-		echo "are you sure to build venv in $c_cur_path ?(no/yes):"
-		read flag
-		while [[ $flag != yes ]]; do
-		if [[ $flag = no ]]; then
-			break
-		fi
-		echo "are you sure to build venv in $c_cur_path ?(no/yes):"
-		read flag
+		askinput "are you sure to build venv in $c_cur_path ?(no/yes):"
+		
 		done
 		if [[ flag = yes ]]; then
 			virtualenv venv
@@ -171,29 +150,13 @@ function requirementsinstall(){
 }
 function developer(){
 	#set sshkey
-	echo "do you need a sshkey?(yes/no):"
-	read flag
-	while [[ $flag != yes ]]; do
-		if [[ $flag = no ]]; then
-			break
-		fi
-		echo "do you need a sshkey?(yes/no):"
-		read flag
-	done
+	askinput "do you need a sshkey?(yes/no):"
 	if [[ $flag = yes ]]; then
 		sshkeyset
 	fi
 
 	#set git config name and email
-	echo "do you need to set git config name and email?(yes/no):"
-	read flag
-	while [[ $flag != yes ]]; do
-		if [[ $flag = no ]]; then
-			break
-		fi
-		echo "do you need to set git config name and email?(yes/no):"
-		read flag
-	done
+	askinput "do you need to set git config name and email?(yes/no):"
 	if [[ $flag = yes ]]; then
 		gitconfigset
 	fi
@@ -211,9 +174,19 @@ function developer(){
 	
 }
 case $1 in
-	-h) echo "pip freeze: list pip package"
+	-h) 
+		echo "./setup [-h] [-v]"
+		echo "-h: help massage"
+		echo "-v: build virtual environment"
+		echo "-------------tips-------------"
+		echo "pip freeze: list pip package"
 		:;;
-	*)	cur_path=$(readlink -f .)
+	-v) 
+		python_virtual
+		requirementsinstall
+		:;;
+	*)
+		cur_path=$(readlink -f .)
 		developer
 		:;;
 esac
