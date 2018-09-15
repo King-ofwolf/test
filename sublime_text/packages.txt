@@ -1,0 +1,8 @@
+All Autocomplete
+BracketHighlighter
+Git
+GitGutter
+Package Control
+SideBarEnhancements
+SublimeCodeIntel
+SublimeLinter
