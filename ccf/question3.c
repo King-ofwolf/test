@@ -151,6 +151,7 @@ void urlheadadd(url *purl,char *strs){
 		pmat=(mat*)malloc(sizeof(mat));
 		pmat->right=NULL;
 		strcpy(pmat->strs,strs);
+		purl->head=pmat;
 		return;
 	}
 	while(pmat->right!=NULL) pmat=pmat->right;
@@ -307,7 +308,7 @@ int main(int argc, char const *argv[])
 		purl=&urls[i];printf("analysis purl %d:%s\n",i,purl->urlstr);
 		for(j=0;j<n;j++){
 			prule=&rules[j];printf("----analysis prule %d:%s\n",j,prule->name);
-			resetpurl();
+			resetpurl();freehead(purl->head);purl->head=NULL;
 			pmat=prule->head;
 			while(pmat!=NULL){
 				matmatch(purl,pmat);
