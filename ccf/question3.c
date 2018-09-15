@@ -163,7 +163,7 @@ void matmatch(url * purl, mat * pmat){
 	int flag=0;
 	switch(pmat->flag){
 		case 1:{
-			flag=urlmatch(purl->urlstr,pmat->strs);printf("--------urlmat:%s,get:%d\n",pmat->strs,flag);
+			flag=urlmatch(purl->urlstr,pmat->strs);
 			if(flag==1){
 				purl->flag=1;return;
 			}else{
@@ -171,7 +171,7 @@ void matmatch(url * purl, mat * pmat){
 			}
 		}
 		case 2:{
-			flag=strmatch(purl->urlstr,pmat->strs);printf("--------strmat:%s,get:%d\n",pmat->strs,flag);
+			flag=strmatch(purl->urlstr,pmat->strs);
 			if(flag==1){
 				purl->flag=1;
 				urlheadadd(purl,pmat->strs);
@@ -181,7 +181,7 @@ void matmatch(url * purl, mat * pmat){
 			}
 		}
 		case 3:{
-			flag=intmatch(purl->urlstr,pmat->strs);printf("--------intmat:%s,get:%d\n",pmat->strs,flag);
+			flag=intmatch(purl->urlstr,pmat->strs);
 			if(flag==1){
 				purl->flag=1;
 				urlheadadd(purl,pmat->strs);
@@ -192,7 +192,7 @@ void matmatch(url * purl, mat * pmat){
 			}
 		}
 		case 4:{
-			flag=pathmatch(purl->urlstr,pmat->strs);printf("--------pathmat:%s,get:%d\n",pmat->strs,flag);
+			flag=pathmatch(purl->urlstr,pmat->strs);
 			if(flag==1){
 				purl->flag=1;
 				urlheadadd(purl,pmat->strs);
@@ -203,12 +203,12 @@ void matmatch(url * purl, mat * pmat){
 			}
 		}
 		case 5:{
-			flag=nullmatch(purl->urlstr);printf("--------nullmatch:/,get:%d\n",flag);
+			flag=nullmatch(purl->urlstr);
 			purl->flag=flag;
 			return;
 		}
 		case 6:{
-			flag=endmatch(purl->urlstr);printf("---------endmatch: ,get:%d\n",flag);
+			flag=endmatch(purl->urlstr);
 			purl->flag=flag;
 			return;
 		}
@@ -286,7 +286,7 @@ int main(int argc, char const *argv[])
 					cache[++p]=c;
 					scanf("%c",&c);
 				}
-				cache[++p]='\0';printf("++%s\n",cache);
+				cache[++p]='\0';
 				strcpy(pmat->strs,cache);
 			}
 		}
@@ -302,12 +302,12 @@ int main(int argc, char const *argv[])
 		urls[i].head=NULL;
 		urls[i].name=NULL;
 	}
-	printf("analysis the urls:\n");
+	
 	//analysis the urls
 	for(i=0;i<m;i++){
-		purl=&urls[i];printf("analysis purl %d:%s\n",i,purl->urlstr);
+		purl=&urls[i];
 		for(j=0;j<n;j++){
-			prule=&rules[j];printf("----analysis prule %d:%s\n",j,prule->name);
+			prule=&rules[j];
 			resetpurl();freehead(purl->head);purl->head=NULL;
 			pmat=prule->head;
 			while(pmat!=NULL){
@@ -321,7 +321,7 @@ int main(int argc, char const *argv[])
 			}
 		}
 	}
-	printf("print the analysised urls\n");
+	
 	//print the analysised urls
 	for(i=0;i<m;i++){
 		purl=&urls[i];
@@ -332,7 +332,7 @@ int main(int argc, char const *argv[])
 		}
 		printf("\n");
 	}
-	printf("free all memory\n");
+	
 	//free all memory
 	for(i=0;i<n;i++){
 		freehead(rules[i].head);
