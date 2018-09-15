@@ -77,15 +77,14 @@ int strmatch(char *matstr,char *savestr){
 	int np=0;
 	savestr[0]='\0';
 	m=mygetc(matstr);
-	if(m!='/') {goback();return 0;}
+	if(m!='/') return 0;
 	m=mygetc(matstr);
-	if(m=='/') {goback();return 0;}
-	if(m=='\0') {goback();return 0;}
+	if(m=='\0') return 0;
 	while(m!='/'&&m!='\0'){
 		if(isachar(m)>0){
 			savestr[np++]=m;
 		}
-		else {goback();return 0;}
+		else return 0;
 		m=mygetc(matstr);
 	}
 	goback();
@@ -97,16 +96,15 @@ int intmatch(char *matstr,char *savestr){
 	int np=0;
 	savestr[0]='\0';
 	m=mygetc(matstr);
-	if(m!='/') {goback();return 0;}
+	if(m!='/') return 0;
 	m=mygetc(matstr);
-	if(m=='/') {goback();return 0;}
-	if(m=='\0') {goback();return 0;}
+	if(m=='\0') return 0;
 	while(m!='/'&&m!='\0'){
 		if(m>='0'&&m<='9'){
 			if(np==0&&m=='0') ;
 			else savestr[np++]=m;
 		}
-		else {goback();return 0;}
+		else return 0;
 		m=mygetc(matstr);
 	}
 	goback();
@@ -118,15 +116,14 @@ int pathmatch(char *matstr,char *savestr){
 	int np=0;
 	savestr[0]='\0';
 	m=mygetc(matstr);
-	if(m!='/') {goback();return 0;}
+	if(m!='/') return 0;
 	m=mygetc(matstr);
-	if(m=='/') {goback();return 0;}
-	if(m=='\0') {goback();return 0;}
+	if(m=='\0') return 0;
 	while(m!='\0'){
 		if(isachar(m)>0||m=='/'){
 			savestr[np++]=m;
 		}
-		else {goback();return 0;}
+		else return 0;
 		m=mygetc(matstr);
 	}
 	goback();
@@ -136,16 +133,30 @@ int pathmatch(char *matstr,char *savestr){
 int nullmatch(char *matstr){
 	char m;
 	m=mygetc(matstr);
-	if(m!='/') {goback();return 0;}
-	else {goback();return 1;}
+	if(m!='/') return 0;
+	m=mygetc(matstr);
+	if(m=='\0') {goback();return 1;}
+	return 0;
+}
+int endmatch(char *matstr){
+	char m;
+	m=mygetc(matstr);
+	if(m=='\0') {goback();return 1;}
+	return 0;
 }
 
 void urlheadadd(url *purl,char *strs){
 	mat *pmat=purl->head;
+	if(pmat==NULL){
+		pmat=(mat*)malloc(sizeof(mat));
+		pmat->right=NULL;
+		strcpy(pmat->strs,strs);
+		return;
+	}
 	while(pmat->right!=NULL) pmat=pmat->right;
 	pmat->right=(mat*)malloc(sizeof(mat));
 	pmat->right->right=NULL;
-	strcpy(pmat->strs,strs);
+	strcpy(pmat->right->strs,strs);
 }
 void matmatch(url * purl, mat * pmat){
 	int flag=0;
@@ -195,6 +206,11 @@ void matmatch(url * purl, mat * pmat){
 			purl->flag=flag;
 			return;
 		}
+		case 6:{
+			flag=endmatch(purl->urlstr);printf("---------endmatch: ,get:%d\n",flag);
+			purl->flag=flag;
+			return;
+		}
 	}
 }
 
@@ -215,9 +231,7 @@ int main(int argc, char const *argv[])
 	for(i=0;i<n;i++){
 		scanf("%c",&c);
 		while(1){
-			//check "/"
-			if(c!='/') printf("error:/\n");
-			else if(rules[i].head==NULL){
+			if(rules[i].head==NULL){
 				rules[i].head=(mat*)malloc(sizeof(mat));
 				pmat=rules[i].head;
 				//pmat->left=NULL;
@@ -229,6 +243,13 @@ int main(int argc, char const *argv[])
 				pmat=pmat->right;
 				pmat->right=NULL;
 			}
+			//check " "
+			if(c==' '){
+				pmat->flag=6;
+				break;
+			}
+			//check "/"
+			else if (c!='/') printf("error:/\n");
 
 			//check "/ "
 			scanf("%c",&c);
@@ -267,7 +288,6 @@ int main(int argc, char const *argv[])
 				cache[++p]='\0';printf("++%s\n",cache);
 				strcpy(pmat->strs,cache);
 			}
-			if(c==' ') break;
 		}
 		pmat=NULL;
 
