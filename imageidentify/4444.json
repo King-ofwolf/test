@@ -1,0 +1,321 @@
+{
+    "log_id": 8969621844543896205,
+    "words_result_num": 35,
+    "words_result": [
+        {
+            "location": {
+                "width": 13,
+                "top": 5,
+                "left": 69,
+                "height": 17
+            },
+            "words": "A"
+        },
+        {
+            "location": {
+                "width": 11,
+                "top": 6,
+                "left": 179,
+                "height": 15
+            },
+            "words": "B"
+        },
+        {
+            "location": {
+                "width": 334,
+                "top": 22,
+                "left": 7,
+                "height": 20
+            },
+            "words": "1会议室房间号 LANAIPti地址可用P范围"
+        },
+        {
+            "location": {
+                "width": 176,
+                "top": 42,
+                "left": 59,
+                "height": 18
+            },
+            "words": "1004192.161.16.100"
+        },
+        {
+            "location": {
+                "width": 58,
+                "top": 43,
+                "left": 276,
+                "height": 15
+            },
+            "words": "101-109"
+        },
+        {
+            "location": {
+                "width": 10,
+                "top": 43,
+                "left": 8,
+                "height": 149
+            },
+            "words": "23456789"
+        },
+        {
+            "location": {
+                "width": 176,
+                "top": 62,
+                "left": 59,
+                "height": 18
+            },
+            "words": "1009192.161.16.110"
+        },
+        {
+            "location": {
+                "width": 57,
+                "top": 63,
+                "left": 276,
+                "height": 14
+            },
+            "words": "111-119"
+        },
+        {
+            "location": {
+                "width": 177,
+                "top": 81,
+                "left": 58,
+                "height": 17
+            },
+            "words": "2005192.161.16.120"
+        },
+        {
+            "location": {
+                "width": 59,
+                "top": 81,
+                "left": 275,
+                "height": 16
+            },
+            "words": "121-129"
+        },
+        {
+            "location": {
+                "width": 177,
+                "top": 100,
+                "left": 58,
+                "height": 18
+            },
+            "words": "2004192.161.16.130"
+        },
+        {
+            "location": {
+                "width": 57,
+                "top": 101,
+                "left": 276,
+                "height": 14
+            },
+            "words": "131-139"
+        },
+        {
+            "location": {
+                "width": 178,
+                "top": 119,
+                "left": 57,
+                "height": 17
+            },
+            "words": "2006192.161.16.140"
+        },
+        {
+            "location": {
+                "width": 57,
+                "top": 120,
+                "left": 276,
+                "height": 14
+            },
+            "words": "141-149"
+        },
+        {
+            "location": {
+                "width": 178,
+                "top": 137,
+                "left": 57,
+                "height": 18
+            },
+            "words": "2015192.161.16.150"
+        },
+        {
+            "location": {
+                "width": 57,
+                "top": 139,
+                "left": 276,
+                "height": 14
+            },
+            "words": "151-159"
+        },
+        {
+            "location": {
+                "width": 35,
+                "top": 157,
+                "left": 59,
+                "height": 17
+            },
+            "words": "3011"
+        },
+        {
+            "location": {
+                "width": 100,
+                "top": 157,
+                "left": 135,
+                "height": 17
+            },
+            "words": "192.161.16.160"
+        },
+        {
+            "location": {
+                "width": 57,
+                "top": 158,
+                "left": 276,
+                "height": 14
+            },
+            "words": "161-169"
+        },
+        {
+            "location": {
+                "width": 176,
+                "top": 176,
+                "left": 59,
+                "height": 17
+            },
+            "words": "4006192.161.16.170"
+        },
+        {
+            "location": {
+                "width": 57,
+                "top": 177,
+                "left": 276,
+                "height": 13
+            },
+            "words": "171-179"
+        },
+        {
+            "location": {
+                "width": 91,
+                "top": 195,
+                "left": 4,
+                "height": 16
+            },
+            "words": "104016"
+        },
+        {
+            "location": {
+                "width": 100,
+                "top": 196,
+                "left": 135,
+                "height": 16
+            },
+            "words": "192.161.16.180"
+        },
+        {
+            "location": {
+                "width": 57,
+                "top": 196,
+                "left": 276,
+                "height": 14
+            },
+            "words": "181-189"
+        },
+        {
+            "location": {
+                "width": 231,
+                "top": 214,
+                "left": 4,
+                "height": 17
+            },
+            "words": "115006192.161.16.190"
+        },
+        {
+            "location": {
+                "width": 56,
+                "top": 215,
+                "left": 277,
+                "height": 14
+            },
+            "words": "191-199"
+        },
+        {
+            "location": {
+                "width": 91,
+                "top": 234,
+                "left": 4,
+                "height": 15
+            },
+            "words": "125018"
+        },
+        {
+            "location": {
+                "width": 100,
+                "top": 234,
+                "left": 135,
+                "height": 15
+            },
+            "words": "192.161.16.200"
+        },
+        {
+            "location": {
+                "width": 58,
+                "top": 234,
+                "left": 276,
+                "height": 14
+            },
+            "words": "201-209"
+        },
+        {
+            "location": {
+                "width": 230,
+                "top": 252,
+                "left": 4,
+                "height": 17
+            },
+            "words": "136006192.161.16.210"
+        },
+        {
+            "location": {
+                "width": 57,
+                "top": 253,
+                "left": 276,
+                "height": 14
+            },
+            "words": "211-219"
+        },
+        {
+            "location": {
+                "width": 230,
+                "top": 272,
+                "left": 4,
+                "height": 15
+            },
+            "words": "146016A192.161.16.220"
+        },
+        {
+            "location": {
+                "width": 56,
+                "top": 272,
+                "left": 277,
+                "height": 14
+            },
+            "words": "221-229"
+        },
+        {
+            "location": {
+                "width": 230,
+                "top": 291,
+                "left": 4,
+                "height": 15
+            },
+            "words": "156016B192.161.16.230"
+        },
+        {
+            "location": {
+                "width": 56,
+                "top": 291,
+                "left": 277,
+                "height": 13
+            },
+            "words": "231-239"
+        }
+    ]
+}

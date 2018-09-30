@@ -1,0 +1,1 @@
+grep "=32" . -R -n >./ressult/result.txt
