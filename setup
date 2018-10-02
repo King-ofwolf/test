@@ -1,7 +1,11 @@
 #!/bin/bash
-function SYSPATHset(){
+
+
+#copy the file including system path to the venv directory and will be excuted by venvstart file. this file contains all the flasky programe system variable.
+function SYSPATHset(){	
 	cp $cur_path/sources/SYSPATH .
 }
+#this function is defined to ask for input and if not get the yes or no input, it will ask again untill it gets one.
 function askinput(){
 	echo $1
 	read flag
@@ -13,6 +17,11 @@ function askinput(){
 		read flag
 	done
 }
+#this function is to check the ssh key is already exist. if not, it will new a key.
+#if exist, it will ask if you want to new one. if yes, then you have to input the directory of the backup ssh key.if no, then it will check the ssh key already exist if it can work.
+#if not exist, it will new a ssh key based on your email address. 
+#after you have got your ssh key. you should new a place in github web and input the ssh key into it.
+#after all, it will check if you can conecte to github.
 function sshkeyset(){
 	cd ~/.ssh
 	if test -f "id_rsa"
@@ -52,6 +61,7 @@ function sshkeyset(){
 	ssh -T git@github.com
 	cd $cur_path
 }
+#this function is definded to set git configrations including git name and email adress
 function gitconfigset(){
 	echo "please input your name:"
 	read name
@@ -60,6 +70,11 @@ function gitconfigset(){
 	gitconfig --global user.name $name
 	gitconfig --global user.email $emailadr
 }
+#this function is set to get the github link and use it to clone the files into your input git clone path
+#if the clone path you have inputed is a directory existed, then you should decide if you want to continue.
+#	after all, it will get a path already existed or a path not existed.
+#	if exist, flag will be yes. then it will go to the directory and clone the git file
+#	if not exist, it will clone the file in the git path you have input directly
 function gitclone(){
 	echo "input git link:"
 	read gitlink
@@ -88,6 +103,11 @@ function gitclone(){
 		return 1
 	fi
 }
+#this function is set to check if the pip and virtual environment have been installed.
+#if pip is not installed, you should add the Python root directory to system path
+#if virtual environment is not installed, it will install virtualenv
+#after that, it will ask you to new a virtual environment at a directory you input.
+#after that, it will create venvstart file and syspath file. and then execute the venvstart file to start the virtual environment.
 function python_virtual(){
 	echo "testing pip installed or not..."
 	pip --version
@@ -141,6 +161,8 @@ function python_virtual(){
 	cd ..
 	source ./venvstart.sqlite
 }
+#this function is set to check the requirements file is exist
+#if exist, it will install all the requirements in that file in the virtual environment
 function requirementsinstall(){
 	if [[ -f requirements.txt ]]; then
 		pip install -r requirements.txt
@@ -148,6 +170,7 @@ function requirementsinstall(){
 		echo "no requirements file"
 	fi
 }
+#this is the main function of the developer to build the nessary environment for flasky to execute.
 function developer(){
 	#set sshkey
 	askinput "do you need a sshkey?(yes/no):"
