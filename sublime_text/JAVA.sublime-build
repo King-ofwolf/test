@@ -1,0 +1,8 @@
+{
+	"cmd": ["cmd", "/c","javac","${file}", "&&", "start", "cmd", "/k", "java","${file_base_name}"],
+	"file_regex": "^(...*?):([0-9]*):?([0-9]*)",
+	"working_dir": "${file_path}",
+	"selector": "source.java",
+	"encoding":"cp936"
+}
+
