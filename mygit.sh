@@ -73,13 +73,13 @@ function recover(){
 	colorecho -blue "------------------"
 }
 function branchmerge(){
-	colorecho -blue "------merge <branch name>------"
+	colorecho -blue "------merge $1------"
 	git merge $1
 	colorecho -blue "-------------------------------"
 	echo "tips: if merge unsuccessful, change the different place and commit."
 }
 function dotags(){
-	colorecho -blue "------git tag -a <tag> -m <msg> <commit id>------"
+	colorecho -blue "------git tag -a $1 -m $2 $3------"
 	if [ $# = 2 ];
 	then
 		git tag -a $1 -m $2
@@ -94,7 +94,7 @@ function synctags(){
 	colorecho -blue "---------------------------------"
 }
 function deltags(){
-	colorecho -blue "------tag -d <tag>&push origin :refs/tags/<tag>------"
+	colorecho -blue "------tag -d $1&push origin :refs/tags/$1------"
 	git tag -d $1
 	git push origin :refs/tags/$1
 	colorecho -blue "------------------------------------------------"
@@ -117,10 +117,26 @@ function helpmsg(){
 	echo "-dt [tag]: delete the tag both local remote and origin remote"
 	colorecho -red "<recover>"
 	echo "-r: see recover message"
+	colorecho -red "<add new version"
+	echo "-a [version tag]: merge dev to master and add a version tag"
 	echo "-------------tips-------------"
 	echo "pip freeze: list pip package"
 }
-
+function addnewversion(){
+	colorecho -blue "------add new version: $1------"
+	git checkout master
+	askinput_yn "Do you at master branch now?(yes/no):"
+	if [[ flag = no ]];
+	then
+		return 0;
+	fi
+	branchmerge dev 
+	dotags $1 "version:$1"
+	#sync3branch
+	#synctags
+	colorecho -blue "------new version end------"
+	git checkout dev
+}
 case $1 in
 	(-i)
 		shift
@@ -151,6 +167,9 @@ case $1 in
 		:;;
 	(-h) 
 		helpmsg
+		:;;
+	(-a)
+		addnewversion $1
 		:;;
 	(*)
 		cur_path=$(pwd)
