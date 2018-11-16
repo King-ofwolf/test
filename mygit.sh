@@ -168,9 +168,10 @@ case $1 in
 	(-h) 
 		helpmsg
 		:;;
-	(-a)
-		addnewversion $1
-		:;;
+	# (-a)
+	# 	shift
+	# 	addnewversion $1
+	# 	:;;
 	(*)
 		cur_path=$(pwd)
 		helpmsg
